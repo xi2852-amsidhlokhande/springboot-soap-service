@@ -20,14 +20,14 @@ public class AppConfig extends WsConfigurerAdapter {
         MessageDispatcherServlet servlet = new MessageDispatcherServlet();
         servlet.setApplicationContext(applicationContext);
         servlet.setTransformWsdlLocations(true);
-        return new ServletRegistrationBean(servlet, "/service/*");
+        return new ServletRegistrationBean(servlet, "/app/*");
     }
 
-    @Bean(name = "studentDetailsWsdl")
+    @Bean(name = "student")
     public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema countriesSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
-        wsdl11Definition.setPortTypeName("StudentDetailsPort");
-        wsdl11Definition.setLocationUri("/service/student-details");
+        wsdl11Definition.setPortTypeName("StudentPort");
+        wsdl11Definition.setLocationUri("/app/student");
         wsdl11Definition.setTargetNamespace("http://www.model.mvc.amsidh.com");
         wsdl11Definition.setSchema(countriesSchema);
         return wsdl11Definition;

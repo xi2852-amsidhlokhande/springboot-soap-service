@@ -1,29 +1,46 @@
 package com.amsidh.mvc.endpoint;
 
-import com.amsidh.mvc.model.Student;
-import com.amsidh.mvc.model.StudentDetailsRequest;
-import com.amsidh.mvc.model.StudentDetailsResponse;
-import lombok.extern.slf4j.Slf4j;
+import com.amsidh.mvc.model.*;
+import com.amsidh.mvc.service.StudentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 @Endpoint
-@Slf4j
+@RequiredArgsConstructor
 public class StudentEndPoint {
-    private static final String NAMESPACE_URI = "http://www.model.mvc.amsidh.com";
+    private static final String NAMESPACE = "http://www.model.mvc.amsidh.com";
+    private final StudentService studentService;
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "StudentDetailsRequest")
+    @PayloadRoot(namespace = NAMESPACE, localPart = "getStudentByIdRequest")
     @ResponsePayload
-    public StudentDetailsResponse getElinkIssueResponse(@RequestPayload StudentDetailsRequest studentDetailsRequest) {
-        log.info("StudentDetailsRequest received {}", studentDetailsRequest);
-        StudentDetailsResponse studentDetailsResponse = new StudentDetailsResponse();
-        Student student = new Student();
-        student.setName("Amsidh");
-        student.setStandard(16);
-        student.setAddress("Pune");
-        studentDetailsResponse.setStudent(student);
-        return studentDetailsResponse;
+    public GetStudentByIdResponse studentById(@RequestPayload GetStudentByIdRequest getStudentByIdRequest) {
+        return studentService.getStudentById(getStudentByIdRequest);
+    }
+
+    @PayloadRoot(namespace = NAMESPACE, localPart = "saveStudentRequest")
+    @ResponsePayload
+    public SaveStudentResponse saveStudent(@RequestPayload SaveStudentRequest saveStudentRequest) {
+        return studentService.saveStudent(saveStudentRequest);
+    }
+
+    @PayloadRoot(namespace = NAMESPACE, localPart = "updateStudentRequest")
+    @ResponsePayload
+    public UpdateStudentResponse updateStudent(@RequestPayload UpdateStudentRequest updateStudentRequest) {
+        return studentService.updateStudent(updateStudentRequest);
+    }
+
+    @PayloadRoot(namespace = NAMESPACE, localPart = "deleteStudentByIdRequest")
+    @ResponsePayload
+    public DeleteStudentByIdResponse updateStudent(@RequestPayload DeleteStudentByIdRequest deleteStudentByIdRequest) {
+        return studentService.deleteStudentById(deleteStudentByIdRequest);
+    }
+
+    @PayloadRoot(namespace = NAMESPACE, localPart = "getAllStudentRequest")
+    @ResponsePayload
+    public GetAllStudentResponse allStudent(@RequestPayload GetAllStudentRequest getAllStudentRequest) {
+        return studentService.getAllStudent(getAllStudentRequest);
     }
 }
