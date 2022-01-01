@@ -7,6 +7,14 @@
             <xs:element name="name" type="xs:string"/>
             <xs:element name="standard" type="xs:int"/>
             <xs:element name="address" type="xs:string"/>
+            <xs:element name="gender" minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Male"/>
+                        <xs:enumeration value="Female"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 

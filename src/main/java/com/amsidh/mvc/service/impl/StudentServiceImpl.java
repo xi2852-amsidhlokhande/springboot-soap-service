@@ -17,8 +17,20 @@ public class StudentServiceImpl implements StudentService {
 
     private static final Map<Long, Student> studentMap = new HashMap<>();
 
+    static {
+        log.info("static method of StudentServiceImpl");
+        Student student = new Student();
+        student.setId(1);
+        student.setName("Aditya");
+        student.setAddress("PWC");
+        student.setStandard(3);
+        student.setGender("Male");
+        studentMap.put(student.getId(), student);
+    }
+
     @Override
     public GetStudentByIdResponse getStudentById(GetStudentByIdRequest getStudentByIdRequest) {
+        log.info("getStudentById method is called");
         Student student = studentMap.get(getStudentByIdRequest.getId());
         GetStudentByIdResponse getStudentByIdResponse = new GetStudentByIdResponse();
         if (Objects.isNull(student)) {
@@ -33,8 +45,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public SaveStudentResponse saveStudent(SaveStudentRequest saveStudentRequest) {
+        log.info("saveStudent method is called");
         Student student = saveStudentRequest.getStudent();
-       studentMap.put(student.getId(), student);
+        studentMap.put(student.getId(), student);
         SaveStudentResponse saveStudentResponse = new SaveStudentResponse();
         saveStudentResponse.setStudent(student);
         return saveStudentResponse;
@@ -42,6 +55,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public UpdateStudentResponse updateStudent(UpdateStudentRequest updateStudentRequest) {
+        log.info("updateStudent method is called");
         long studentId = updateStudentRequest.getId();
         Optional<UpdateStudentResponse> updateStudentResponse = Optional.ofNullable(studentMap.get(studentId)).map(student -> {
             Student requestStudent = updateStudentRequest.getStudent();
@@ -60,6 +74,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public DeleteStudentByIdResponse deleteStudentById(DeleteStudentByIdRequest deleteStudentByIdRequest) {
+        log.info("deleteStudentById method is called");
         studentMap.remove(deleteStudentByIdRequest.getId());
         DeleteStudentByIdResponse deleteStudentByIdResponse = new DeleteStudentByIdResponse();
         ServiceStatus serviceStatus = new ServiceStatus();
@@ -71,6 +86,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public GetAllStudentResponse getAllStudent(GetAllStudentRequest getAllStudentRequest) {
+        log.info("getAllStudent method is called");
         GetAllStudentResponse getAllStudentResponse = new GetAllStudentResponse();
         getAllStudentResponse.getStudents().addAll(studentMap.values());
         return getAllStudentResponse;
